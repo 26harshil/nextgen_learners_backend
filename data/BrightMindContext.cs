@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using BrightMindQuizApi.Models;
 
-//6yg qy6jn6yy7 
+//harshil
 namespace BrightMindQuizApi.Data;
 
 public class BrightMindContext : DbContext
