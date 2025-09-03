@@ -63,7 +63,8 @@ builder.Services.AddSwaggerGen(c =>
 // EF Core with retry logic
 builder.Services.AddDbContext<BrightMindContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("BrightMindDb"),
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        // builder.Configuration.GetConnectionString("BrightMindDb"),
         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
             maxRetryCount: 5, // Retry up to 5 times
             maxRetryDelay: TimeSpan.FromSeconds(10), // Wait up to 10 seconds between retries

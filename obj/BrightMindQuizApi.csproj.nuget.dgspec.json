@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Flutter Project\\tryback\\BrightMindQuizApi\\BrightMindQuizApi.csproj": {}
+    "d:\\Flutter Project\\Backend\\BrightMindQuizApi\\BrightMindQuizApi.csproj": {}
   },
   "projects": {
-    "D:\\Flutter Project\\tryback\\BrightMindQuizApi\\BrightMindQuizApi.csproj": {
+    "d:\\Flutter Project\\Backend\\BrightMindQuizApi\\BrightMindQuizApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Flutter Project\\tryback\\BrightMindQuizApi\\BrightMindQuizApi.csproj",
+        "projectUniqueName": "d:\\Flutter Project\\Backend\\BrightMindQuizApi\\BrightMindQuizApi.csproj",
         "projectName": "BrightMindQuizApi",
-        "projectPath": "D:\\Flutter Project\\tryback\\BrightMindQuizApi\\BrightMindQuizApi.csproj",
+        "projectPath": "d:\\Flutter Project\\Backend\\BrightMindQuizApi\\BrightMindQuizApi.csproj",
         "packagesPath": "C:\\Users\\harshil\\.nuget\\packages\\",
-        "outputPath": "D:\\Flutter Project\\tryback\\BrightMindQuizApi\\obj\\",
+        "outputPath": "d:\\Flutter Project\\Backend\\BrightMindQuizApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -64,6 +64,10 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.8, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
