@@ -1,0 +1,96 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using BrightMindQuizApi.Data;
+using BrightMindQuizApi.Models;
+
+namespace BrightMindQuizApi.Controllers;
+
+[ApiController]
+[Route("Quizz")]
+public class QuizController : ControllerBase
+{
+    private readonly BrightMindContext _context;
+
+    public QuizController(BrightMindContext context)
+    {
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+    }
+
+    [HttpGet("colors")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetColorsQuiz()
+    {
+        return await GetQuizQuestions(16);
+    }
+
+    [HttpGet("fruits")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetFruitsQuiz()
+    {
+        return await GetQuizQuestions(31);
+    }
+
+    [HttpGet("math")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
+    {
+        return await GetQuizQuestions(18);
+    }
+
+    [HttpGet("vegetables")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVegetablesQuiz()
+    {
+        return await GetQuizQuestions(34);
+    }
+    [HttpGet("vehicals")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVehiclesQuiz()
+    {
+        return await GetQuizQuestions(32);
+    }
+    [HttpGet("animalname")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
+        {
+            return await GetQuizQuestions(22);
+        }
+    [HttpGet("birds")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetABirdQuiz()
+        {
+            return await GetQuizQuestions(25);
+        }
+
+    private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(int quizId)
+    {
+        try
+        {
+            var questions = await _context.Questions
+                .Where(q => q.QuizId == quizId)
+                .Include(q => q.QuestionOptions)
+                .ThenInclude(qo => qo.Option)
+                .Select(q => new QuestionDto
+                {
+                    QuestionId = q.QuestionId,
+                    QuestionText = q.QuestionText,
+                    ImageUrl = q.ImageUrl,
+                    SoundData  = q.SoundData ,
+                    Hint = q.Hint,
+                    FunFact = q.FunFact,
+                    Options = q.QuestionOptions.Select(qo => new OptionDto
+                    {
+                        OptionId = qo.OptionId,
+                        OptionText = qo.Option != null ? qo.Option.OptionText : "Missing Option",
+                        IsCorrect = qo.IsCorrect
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            if (!questions.Any())
+            {
+                return NotFound($"No questions found for quiz ID {quizId}.");
+            }
+
+            return Ok(questions);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching questions for QuizId {quizId}: {ex.Message}");
+            return StatusCode(500, $"An error occurred while fetching quiz questions: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,6 @@
+@BrightMindQuizApi_HostAddress = http://localhost:5963
+
+GET {{BrightMindQuizApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
