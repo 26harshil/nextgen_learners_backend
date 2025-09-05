@@ -15,17 +15,17 @@ public class BrightMindContext : DbContext
     public DbSet<Question> Questions { get; set; }
     public DbSet<OptionPool> OptionPools { get; set; }
     public DbSet<QuestionOption> QuestionOptions { get; set; }
-    public DbSet<UserProgress> UserProgresses { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Map to exact table names
-        modelBuilder.Entity<Category>().ToTable("Category");
-        modelBuilder.Entity<Quiz>().ToTable("Quiz");
-        modelBuilder.Entity<Question>().ToTable("Question");
+        modelBuilder.Entity<Category>().ToTable("category");
+        modelBuilder.Entity<Quiz>().ToTable("quiz");
+        modelBuilder.Entity<Question>().ToTable("question");
         modelBuilder.Entity<OptionPool>().ToTable("OptionPool");
-        modelBuilder.Entity<QuestionOption>().ToTable("Question_Option");
-        modelBuilder.Entity<UserProgress>().ToTable("UserProgress");
+        modelBuilder.Entity<QuestionOption>().ToTable("question_option");
+    
 
         // Map column names for Category
         modelBuilder.Entity<Category>()
@@ -106,20 +106,7 @@ public class BrightMindContext : DbContext
             .Property(qo => qo.UpdatedAt).HasColumnName("updated_at")
             .HasDefaultValueSql("GETDATE()");
 
-        // Map column names for UserProgress
-        modelBuilder.Entity<UserProgress>()
-            .Property(up => up.ProgressId).HasColumnName("progress_id");
-        modelBuilder.Entity<UserProgress>()
-            .Property(up => up.UserId).HasColumnName("user_id");
-        modelBuilder.Entity<UserProgress>()
-            .Property(up => up.QuizId).HasColumnName("quiz_id");
-        modelBuilder.Entity<UserProgress>()
-            .Property(up => up.QuestionId).HasColumnName("question_id");
-        modelBuilder.Entity<UserProgress>()
-            .Property(up => up.IsCorrect).HasColumnName("is_correct");
-        modelBuilder.Entity<UserProgress>()
-            .Property(up => up.AttemptDate).HasColumnName("attempt_date")
-            .HasDefaultValueSql("GETDATE()");
+     
 
         // Configure relationships and constraints
         modelBuilder.Entity<QuestionOption>()
