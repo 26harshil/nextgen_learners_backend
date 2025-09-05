@@ -12,15 +12,19 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "BrightMind Quiz API", Version = "v1" });
 });
 
-// EF Core with retry logic
-builder.Services.AddDbContext<BrightMindContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        // builder.Configuration.GetConnectionString("BrightMindDb"),
-        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
-            maxRetryCount: 5, // Retry up to 5 times
-            maxRetryDelay: TimeSpan.FromSeconds(10), // Wait up to 10 seconds between retries
-            errorNumbersToAdd: null))); // Use default transient error codes
+// // EF Core with retry logic
+// builder.Services.AddDbContext<BrightMindContext>(options =>
+//     options.UseSqlServer(
+//         builder.Configuration.GetConnectionString("DefaultConnection"),
+//         // builder.Configuration.GetConnectionString("BrightMindDb"),
+//         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
+//             maxRetryCount: 5, // Retry up to 5 times
+//             maxRetryDelay: TimeSpan.FromSeconds(10), // Wait up to 10 seconds between retries
+//             errorNumbersToAdd: null))); // Use default transient error codes
+
+
+builder.Services.AddDbContext<BrightMindContext>(options => 
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // CORS configuration
 builder.Services.AddCors(options =>
