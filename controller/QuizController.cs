@@ -19,40 +19,40 @@ public class QuizController : ControllerBase
     [HttpGet("colors")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetColorsQuiz()
     {
-        return await GetQuizQuestions(16);
+        return await GetQuizQuestions(2);
     }
 
     [HttpGet("fruits")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetFruitsQuiz()
     {
-        return await GetQuizQuestions(31);
+        return await GetQuizQuestions(3);
     }
 
     [HttpGet("math")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
     {
-        return await GetQuizQuestions(18);
+        return await GetQuizQuestions(8);
     }
 
     [HttpGet("vegetables")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVegetablesQuiz()
     {
-        return await GetQuizQuestions(34);
+        return await GetQuizQuestions(6);
     }
     [HttpGet("vehicals")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVehiclesQuiz()
     {
-        return await GetQuizQuestions(32);
+        return await GetQuizQuestions(7);
     }
     [HttpGet("animalname")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
         {
-            return await GetQuizQuestions(22);
+            return await GetQuizQuestions(4);
         }
     [HttpGet("birds")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetABirdQuiz()
         {
-            return await GetQuizQuestions(25);
+            return await GetQuizQuestions(5);
         }
 
     private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(int quizId)
