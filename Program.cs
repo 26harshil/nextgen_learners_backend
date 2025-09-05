@@ -49,5 +49,6 @@ app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
 app.UseStaticFiles();
+app.MapGet("/", () => Results.Ok("Healthy ✅"));
 
 app.Run();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BrightMindQuizApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2d21fd514c98d27f70f96e58f28ac61c233467d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56b25523a2ac60ce1797a0cfeccd90b5ebf1cfb7")]
 [assembly: System.Reflection.AssemblyProductAttribute("BrightMindQuizApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BrightMindQuizApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
