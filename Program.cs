@@ -1,51 +1,3 @@
-
-//using Microsoft.EntityFrameworkCore;
-//using BrightMindQuizApi.Data;
-//using Microsoft.OpenApi.Models;
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Services
-//builder.Services.AddControllers();
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BrightMind Quiz API", Version = "v1" });
-//});
-
-//// EF Core (uses appsettings.json connection string named BrightMindDb)
-//builder.Services.AddDbContext<BrightMindContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("BrightMindDb")));
-
-//// (Optional, but recommended for Flutter/Web access)
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAll", builder =>
-//    {
-//        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-//    });
-//});
-
-
-//var app = builder.Build();
-
-//// Pipeline
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//// If your IIS site only has HTTP binding, keep HTTPS redirection OFF.
-//// If you have an HTTPS binding + certificate, enable the line below.
-//// app.UseHttpsRedirection();
-//app.UseCors("AllowAll");
-//app.UseAuthorization();
-//app.MapControllers();
-
-//app.Run();
-
-
 using Microsoft.EntityFrameworkCore;
 using BrightMindQuizApi.Data;
 using Microsoft.OpenApi.Models;
@@ -92,5 +44,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
+app.UseStaticFiles();
 
 app.Run();
