@@ -14,7 +14,8 @@ RUN dotnet publish "BrightMindQuizApi.csproj" -c Release -o /app
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
-@@ -20,4 +20,4 @@
+WORKDIR /app
+COPY --from=build / app ./
 
 # Render provides $PORT env variable
 ENV ASPNETCORE_URLS=http://+:$PORT
