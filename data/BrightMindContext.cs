@@ -23,7 +23,7 @@ public class BrightMindContext : DbContext
         modelBuilder.Entity<Category>().ToTable("category");
         modelBuilder.Entity<Quiz>().ToTable("quiz");
         modelBuilder.Entity<Question>().ToTable("question");
-        modelBuilder.Entity<OptionPool>().ToTable("OptionPool");
+        modelBuilder.Entity<OptionPool>().ToTable("optionpool");
         modelBuilder.Entity<QuestionOption>().ToTable("question_option");
     
 
