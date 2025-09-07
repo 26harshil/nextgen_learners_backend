@@ -49,7 +49,7 @@ public class QuizController : ControllerBase
     [HttpGet("animalname")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
     {
-        return await GetQuizQuestions(9);
+        return await GetQuizQuestions(4);
     }
 
     [HttpGet("birds")]
@@ -65,7 +65,7 @@ public class QuizController : ControllerBase
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
             var questions = await _context.Questions
                 .Where(q => q.QuizId == quizId)
-                .Include(q => q.QuestionOptions)
+                .Include(q => q.QuestionOptions)    
                 .ThenInclude(qo => qo.Option)
                 .Select(q => new QuestionDto
                 {
