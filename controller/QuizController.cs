@@ -49,7 +49,7 @@ public class QuizController : ControllerBase
     [HttpGet("animalname")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
     {
-        return await GetQuizQuestions(11);
+        return await GetQuizQuestions(4);
     }
 
     [HttpGet("birds")]
