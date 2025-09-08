@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BrightMindQuizApi.Data;
 using BrightMindQuizApi.Models;
-using Microsoft.Extensions.Logging;
 
 namespace BrightMindQuizApi.Controllers;
 
@@ -11,12 +10,10 @@ namespace BrightMindQuizApi.Controllers;
 public class QuizController : ControllerBase
 {
     private readonly BrightMindContext _context;
-    private readonly ILogger<QuizController> _logger;
 
-    public QuizController(BrightMindContext context, ILogger<QuizController> logger)
+    public QuizController(BrightMindContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     [HttpGet("colors")]
@@ -72,6 +69,7 @@ public class QuizController : ControllerBase
         {
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
             var questions = await _context.Questions
+            
                 .Where(q => q.QuizId == quizId)
                 .Include(q => q.QuestionOptions)
                 .ThenInclude(qo => qo.Option)
@@ -105,8 +103,8 @@ public class QuizController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error fetching questions for QuizId {QuizId}", quizId);
-            return StatusCode(500, "An error occurred while fetching quiz questions. Please try again later.");
+            Console.WriteLine($"Error fetching questions for QuizId {quizId}: {ex.Message}");
+            return StatusCode(500, $"An error occurred while fetching quiz questions: {ex.Message}");
         }
     }
 }
