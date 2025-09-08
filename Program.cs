@@ -1,30 +1,42 @@
 using Microsoft.EntityFrameworkCore;
 using BrightMindQuizApi.Data;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
+using BrightMindQuizApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 //  "DefaultConnection":"Host=dpg-d2s7v2odl3ps73bn9mv0-a.singapore-postgres.render.com;Port=5432;Database=db_nextgen_learners;Username=harshil;Password=3gKsPTp0YWWSAdGmbNZsUxXoUPd49okl;Sslmode=require;TrustServerCertificate=true;"
 // Services
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+    options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "BrightMind Quiz API", Version = "v1" });
 });
 
-// // EF Core with retry logic
-// builder.Services.AddDbContext<BrightMindContext>(options =>
-//     options.UseSqlServer(
-//         builder.Configuration.GetConnectionString("DefaultConnection"),
-//         // builder.Configuration.GetConnectionString("BrightMindDb"),
-//         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
-//             maxRetryCount: 5, // Retry up to 5 times
-//             maxRetryDelay: TimeSpan.FromSeconds(10), // Wait up to 10 seconds between retries
-//             errorNumbersToAdd: null))); // Use default transient error codes
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddDbContextPool<BrightMindContext>(options =>
+{
+    options.UseNpgsql(connectionString, npgsqlOptions =>
+    {
+        npgsqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(10),
+            errorCodesToAdd: null);
+        npgsqlOptions.CommandTimeout(30);
+    });
 
-builder.Services.AddDbContext<BrightMindContext>(options => 
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableDetailedErrors();
+        options.EnableSensitiveDataLogging();
+    }
+});
 
 // CORS configuration
 builder.Services.AddCors(options =>
@@ -36,6 +48,20 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Ensure database exists on startup (creates tables if missing)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<BrightMindContext>();
+    try
+    {
+        db.Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "Failed to ensure database is created");
+    }
+}
 
 // Pipeline
 if (app.Environment.IsDevelopment())
@@ -50,5 +76,31 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseStaticFiles();
 app.MapGet("/", () => Results.Ok("Healthy ✅"));
+
+app.MapGet("/health/db", async (BrightMindContext db) =>
+{
+    try
+    {
+        var canConnect = await db.Database.CanConnectAsync();
+        return canConnect ? Results.Ok("Database connection OK") : Results.Problem("Database connection failed");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"DB health check failed: {ex.Message}");
+    }
+});
+
+app.MapGet("/health/schema", async (BrightMindContext db) =>
+{
+    try
+    {
+        var anyQuestion = await db.Questions.Take(1).Select(q => q.QuestionId).ToListAsync();
+        return Results.Ok(new { ok = true, hasQuestions = anyQuestion.Any() });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Schema check failed: {ex.Message}");
+    }
+});
 
 app.Run();
