@@ -57,11 +57,6 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(5);
     }
-    [HttpGet("Sounds")]
-    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
-    {
-        return await GetQuizQuestions(10);
-    }
 
     private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(int quizId)
     {
@@ -79,9 +74,7 @@ public class QuizController : ControllerBase
                     ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
                         ? null
                         : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").Replace("images/", "").TrimStart('/')}",
-                    SoundData = q.SoundData != null
-                        ? $"/sounds/{Path.GetFileName(q.SoundData)}"
-                        : null,
+                    SoundData = q.SoundData,
                     Hint = q.Hint,
                     FunFact = q.FunFact,
                     Options = q.QuestionOptions.Select(qo => new OptionDto

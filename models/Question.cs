@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BrightMindQuizApi.Models
 {
     public class Question
-    {`
+    {
         [Key]
         public int QuestionId { get; set; }
 
@@ -18,8 +18,7 @@ namespace BrightMindQuizApi.Models
         [MaxLength(500)]
         public string? ImageUrl { get; set; }
 
-       [MaxLength(500)] // Added to limit URL/path length
-        public string? SoundData { get; set; } 
+        public byte[]? SoundData { get; set; }
 
         [MaxLength(500)]
         public string? Hint { get; set; }
