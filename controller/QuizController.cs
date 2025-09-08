@@ -65,7 +65,7 @@ public class QuizController : ControllerBase
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
             var questions = await _context.Questions
                 .Where(q => q.QuizId == quizId)
-                .Include(q => q.QuestionOptions)    
+                .Include(q => q.QuestionOptions)
                 .ThenInclude(qo => qo.Option)
                 .Select(q => new QuestionDto
                 {
@@ -73,7 +73,7 @@ public class QuizController : ControllerBase
                     QuestionText = q.QuestionText,
                     ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
                         ? null
-                        : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").TrimStart('/')}",
+                        : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").Replace("images/", "").TrimStart('/')}",
                     SoundData = q.SoundData,
                     Hint = q.Hint,
                     FunFact = q.FunFact,
