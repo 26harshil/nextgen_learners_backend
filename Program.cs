@@ -1,16 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using BrightMindQuizApi.Data;
 using Microsoft.OpenApi.Models;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 //  "DefaultConnection":"Host=dpg-d2s7v2odl3ps73bn9mv0-a.singapore-postgres.render.com;Port=5432;Database=db_nextgen_learners;Username=harshil;Password=3gKsPTp0YWWSAdGmbNZsUxXoUPd49okl;Sslmode=require;TrustServerCertificate=true;"
 // Services
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
-    options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower;
-});
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
