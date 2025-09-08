@@ -3,7 +3,7 @@ namespace BrightMindQuizApi.Models
 {
     public class QuestionDto
     {
-    
+        public int QuestionId { get; set; }
         public string QuestionText { get; set; } = string.Empty;
         public string? ImageUrl { get; set; }
        public string? SoundData { get; set; }
