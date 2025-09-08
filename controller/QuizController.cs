@@ -69,13 +69,13 @@ public class QuizController : ControllerBase
         {
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
             var questions = await _context.Questions
-            
+
                 .Where(q => q.QuizId == quizId)
                 .Include(q => q.QuestionOptions)
                 .ThenInclude(qo => qo.Option)
                 .Select(q => new QuestionDto
                 {
-                    QuestionId = q.QuestionId,
+                  
                     QuestionText = q.QuestionText,
                     ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
                         ? null
