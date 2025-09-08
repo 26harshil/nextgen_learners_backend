@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BrightMindQuizApi.Models;
 
-//harshil
 namespace BrightMindQuizApi.Data;
 
 public class BrightMindContext : DbContext
@@ -16,7 +15,6 @@ public class BrightMindContext : DbContext
     public DbSet<OptionPool> OptionPools { get; set; }
     public DbSet<QuestionOption> QuestionOptions { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Map to exact table names
@@ -25,7 +23,6 @@ public class BrightMindContext : DbContext
         modelBuilder.Entity<Question>().ToTable("question");
         modelBuilder.Entity<OptionPool>().ToTable("optionpool");
         modelBuilder.Entity<QuestionOption>().ToTable("question_option");
-    
 
         // Map column names for Category
         modelBuilder.Entity<Category>()
@@ -36,10 +33,10 @@ public class BrightMindContext : DbContext
             .Property(c => c.Description).HasColumnName("description");
         modelBuilder.Entity<Category>()
             .Property(c => c.CreatedAt).HasColumnName("created_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
         modelBuilder.Entity<Category>()
             .Property(c => c.UpdatedAt).HasColumnName("updated_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         // Map column names for Quiz
         modelBuilder.Entity<Quiz>()
@@ -50,10 +47,10 @@ public class BrightMindContext : DbContext
             .Property(q => q.CategoryId).HasColumnName("category_id");
         modelBuilder.Entity<Quiz>()
             .Property(q => q.CreatedAt).HasColumnName("created_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
         modelBuilder.Entity<Quiz>()
             .Property(q => q.UpdatedAt).HasColumnName("updated_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         // Map column names for Question
         modelBuilder.Entity<Question>()
@@ -66,17 +63,17 @@ public class BrightMindContext : DbContext
             .Property(q => q.ImageUrl).HasColumnName("image_url");
         modelBuilder.Entity<Question>()
             .Property(q => q.SoundData).HasColumnName("sound_data")
-            .HasColumnType("VARBINARY(MAX)");
+            .HasColumnType("TEXT"); // Changed from VARBINARY(MAX) to TEXT
         modelBuilder.Entity<Question>()
             .Property(q => q.Hint).HasColumnName("hint");
         modelBuilder.Entity<Question>()
             .Property(q => q.FunFact).HasColumnName("fun_fact");
         modelBuilder.Entity<Question>()
             .Property(q => q.CreatedAt).HasColumnName("created_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
         modelBuilder.Entity<Question>()
             .Property(q => q.UpdatedAt).HasColumnName("updated_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         // Map column names for OptionPool
         modelBuilder.Entity<OptionPool>()
@@ -85,10 +82,10 @@ public class BrightMindContext : DbContext
             .Property(o => o.OptionText).HasColumnName("option_text");
         modelBuilder.Entity<OptionPool>()
             .Property(o => o.CreatedAt).HasColumnName("created_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
         modelBuilder.Entity<OptionPool>()
             .Property(o => o.UpdatedAt).HasColumnName("updated_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         // Map column names for QuestionOption
         modelBuilder.Entity<QuestionOption>()
@@ -101,12 +98,10 @@ public class BrightMindContext : DbContext
             .Property(qo => qo.IsCorrect).HasColumnName("is_correct");
         modelBuilder.Entity<QuestionOption>()
             .Property(qo => qo.CreatedAt).HasColumnName("created_at")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
         modelBuilder.Entity<QuestionOption>()
             .Property(qo => qo.UpdatedAt).HasColumnName("updated_at")
-            .HasDefaultValueSql("GETDATE()");
-
-     
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         // Configure relationships and constraints
         modelBuilder.Entity<QuestionOption>()
