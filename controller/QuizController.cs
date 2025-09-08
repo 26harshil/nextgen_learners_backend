@@ -57,6 +57,11 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(5);
     }
+    [HttpGet("Sounds")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
+    {
+        return await GetQuizQuestions(10);
+    }
 
     private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(int quizId)
     {
