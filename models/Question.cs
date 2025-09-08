@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BrightMindQuizApi.Models
 {
     public class Question
-    {
+    {`
         [Key]
         public int QuestionId { get; set; }
 
