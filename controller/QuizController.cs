@@ -74,7 +74,9 @@ public class QuizController : ControllerBase
                     ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
                         ? null
                         : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").Replace("images/", "").TrimStart('/')}",
-                    SoundData = q.SoundData,
+                    SoundData = q.SoundData != null
+                        ? $"/sounds/{Path.GetFileName(q.SoundData)}"
+                        : null,
                     Hint = q.Hint,
                     FunFact = q.FunFact,
                     Options = q.QuestionOptions.Select(qo => new OptionDto
