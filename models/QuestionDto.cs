@@ -6,7 +6,7 @@ namespace BrightMindQuizApi.Models
         public int QuestionId { get; set; }
         public string QuestionText { get; set; } = string.Empty;
         public string? ImageUrl { get; set; }
-        public byte[]? SoundData { get; set; }
+       public string? SoundUrl { get; set; }
         public string? Hint { get; set; }
         public string? FunFact { get; set; }
 

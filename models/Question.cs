@@ -18,7 +18,8 @@ namespace BrightMindQuizApi.Models
         [MaxLength(500)]
         public string? ImageUrl { get; set; }
 
-        public byte[]? SoundData { get; set; }
+       [MaxLength(500)]
+        public string? SoundUrl { get; set; }
 
         [MaxLength(500)]
         public string? Hint { get; set; }
