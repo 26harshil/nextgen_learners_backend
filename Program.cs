@@ -50,5 +50,17 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseStaticFiles();
 app.MapGet("/", () => Results.Ok("Healthy ✅"));
+app.MapGet("/health/db", async (BrightMindContext db) =>
+{
+    try
+    {
+        var canConnect = await db.Database.CanConnectAsync();
+        return canConnect ? Results.Ok("DB OK") : Results.Problem("DB unreachable");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"DB error: {ex.GetBaseException().Message}");
+    }
+});
 
 app.Run();
