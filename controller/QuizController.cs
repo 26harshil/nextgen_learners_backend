@@ -163,7 +163,7 @@ public class QuizController : ControllerBase
     [HttpGet("sounds")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
     {
-        return await GetQuizQuestions(1);  // Adjust quizId based on your database
+        return await GetQuizQuestions(13);  // Adjust quizId based on your database
     }
 
     private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(int quizId)
