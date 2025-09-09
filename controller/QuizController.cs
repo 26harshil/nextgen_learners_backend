@@ -31,7 +31,7 @@ public class QuizController : ControllerBase
     [HttpGet("math")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
     {
-        return await GetQuizQuestions(1);
+        return await GetQuizQuestions(8);
     }
 
     [HttpGet("vegetables")]
@@ -49,7 +49,7 @@ public class QuizController : ControllerBase
     [HttpGet("animalname")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
     {
-        return await GetQuizQuestions(4);
+        return await GetQuizQuestions(12);
     }
 
     [HttpGet("birds")]
