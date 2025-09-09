@@ -66,7 +66,7 @@ public class BrightMindContext : DbContext
             .Property(q => q.ImageUrl).HasColumnName("image_url");
         modelBuilder.Entity<Question>()
             .Property(q => q.SoundData).HasColumnName("sound_data")
-            .HasColumnType("VARBINARY(MAX)");
+            .HasColumnType("bytea");
         modelBuilder.Entity<Question>()
             .Property(q => q.Hint).HasColumnName("hint");
         modelBuilder.Entity<Question>()
