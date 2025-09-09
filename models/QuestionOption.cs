@@ -19,3 +19,4 @@ namespace BrightMindQuizApi.Models
         public OptionPool? Option { get; set; }
     }
 }
+
