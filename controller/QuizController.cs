@@ -70,30 +70,34 @@ public class QuizController : ControllerBase
         try
         {
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
-            var questions = await _context.Questions
+
+            // Fetch raw data from DB first (no string manipulation in SQL)
+            var rawQuestions = await _context.Questions
                 .Where(q => q.QuizId == quizId)
                 .Include(q => q.QuestionOptions)
                 .ThenInclude(qo => qo.Option)
-                .Select(q => new QuestionDto
-                {
-                    QuestionId = q.QuestionId,
-                    QuestionText = q.QuestionText,
-                    ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
-                        ? null
-                        : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").Replace("images/", "").TrimStart('/')}",
-                    SoundUrl = string.IsNullOrEmpty(q.SoundUrl)
-                        ? null
-                        : $"{baseUrl}/sounds/{q.SoundUrl.Replace("assets/sounds/", "").TrimStart('/')}",
-                    Hint = q.Hint,
-                    FunFact = q.FunFact,
-                    Options = q.QuestionOptions.Select(qo => new OptionDto
-                    {
-                        OptionId = qo.OptionId,
-                        OptionText = qo.Option != null ? qo.Option.OptionText : "Missing Option",
-                        IsCorrect = qo.IsCorrect
-                    }).ToList()
-                })
                 .ToListAsync();
+
+            // Do string transformations in-memory (C#), not in PostgreSQL SQL
+            var questions = rawQuestions.Select(q => new QuestionDto
+            {
+                QuestionId = q.QuestionId,
+                QuestionText = q.QuestionText,
+                ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
+                    ? null
+                    : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").Replace("images/", "").TrimStart('/')}",
+                SoundUrl = string.IsNullOrEmpty(q.SoundUrl)
+                    ? null
+                    : $"{baseUrl}/sounds/{q.SoundUrl.Replace("assets/sounds/", "").TrimStart('/')}",
+                Hint = q.Hint,
+                FunFact = q.FunFact,
+                Options = q.QuestionOptions.Select(qo => new OptionDto
+                {
+                    OptionId = qo.OptionId,
+                    OptionText = qo.Option != null ? qo.Option.OptionText : "Missing Option",
+                    IsCorrect = qo.IsCorrect
+                }).ToList()
+            }).ToList();
 
             if (!questions.Any())
             {
