@@ -20,55 +20,155 @@ public class QuizController : ControllerBase
     [HttpGet("colors")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetColorsQuiz()
     {
-        return await GetQuizQuestions(2);
+        return await GetQuizQuestions(
+            fallbackQuizId: 2,
+            quizTitleCandidates: ["Learn Colors with Fun"]
+        );
     }
 
     [HttpGet("fruits")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetFruitsQuiz()
     {
-        return await GetQuizQuestions(3);
+        return await GetQuizQuestions(
+            fallbackQuizId: 3,
+            quizTitleCandidates: ["Fruit Fiesta"]
+        );
     }
 
     [HttpGet("math")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
     {
-        return await GetQuizQuestions(8);
+        return await GetQuizQuestions(
+            fallbackQuizId: 8,
+            quizTitleCandidates: ["Math Mastery"]
+        );
     }
 
     [HttpGet("vegetables")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVegetablesQuiz()
     {
-        return await GetQuizQuestions(6);
+        return await GetQuizQuestions(
+            fallbackQuizId: 6,
+            quizTitleCandidates: ["Vegetable Adventure"]
+        );
     }
 
     [HttpGet("vehicles")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVehiclesQuiz()
     {
-        return await GetQuizQuestions(7);
+        return await GetQuizQuestions(
+            fallbackQuizId: 7,
+            quizTitleCandidates: ["Vehicles World"]
+        );
     }
 
     [HttpGet("animalname")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
     {
-        return await GetQuizQuestions(12);
+        return await GetQuizQuestions(
+            fallbackQuizId: 12,
+            quizTitleCandidates: ["Animal Name"]
+        );
     }
 
     [HttpGet("birds")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBirdQuiz()
     {
-        return await GetQuizQuestions(5);
+        return await GetQuizQuestions(
+            fallbackQuizId: 5,
+            quizTitleCandidates: ["Bird"]
+        );
     }
 
     [HttpGet("sounds")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
     {
-        return await GetQuizQuestions(13);  // Adjust quizId based on your database
+        return await GetQuizQuestions(
+            fallbackQuizId: 13,
+            quizTitleCandidates: ["Animal Sounds", "Sounds"]
+        );
     }
 
-    private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(int quizId)
+    [HttpGet("animalhomes")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalHomesQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 14,
+            quizTitleCandidates: ["Animal Homes & Babies", "Nature Explorer"]
+        );
+    }
+
+    [HttpGet("musicalinstruments")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMusicalInstrumentsQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 15,
+            quizTitleCandidates: ["Musical Instruments", "The Music Room"]
+        );
+    }
+
+    [HttpGet("emotions")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetEmotionsQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 16,
+            quizTitleCandidates: ["Emotions & Feelings", "How Do You Feel?"]
+        );
+    }
+
+    [HttpGet("opposites")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetOppositesQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 17,
+            quizTitleCandidates: ["Opposites", "Opposite Day"]
+        );
+    }
+
+    [HttpGet("weather")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetWeatherQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 18,
+            quizTitleCandidates: ["Weather and Seasons", "Weather Watcher"]
+        );
+    }
+
+    [HttpGet("communityhelpers")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetCommunityHelpersQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 19,
+            quizTitleCandidates: ["Community Helpers", "Who Helps Us?"]
+        );
+    }
+
+    [HttpGet("bodyparts")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBodyPartsQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 20,
+            quizTitleCandidates: ["Body Parts", "All About Me"]
+        );
+    }
+
+    [HttpGet("basicshapes")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBasicShapesQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 21,
+            quizTitleCandidates: ["Basic Shapes", "Shape Explorer"]
+        );
+    }
+
+    private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(
+        int fallbackQuizId,
+        params string[] quizTitleCandidates
+    )
     {
         try
         {
+            var quizId = await ResolveQuizIdAsync(fallbackQuizId, quizTitleCandidates);
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
 
             // Fetch raw data from DB first (no string manipulation in SQL)
@@ -85,10 +185,10 @@ public class QuizController : ControllerBase
                 QuestionText = q.QuestionText,
                 ImageUrl = string.IsNullOrEmpty(q.ImageUrl)
                     ? null
-                    : $"{baseUrl}/images/{q.ImageUrl.Replace("assets/", "").Replace("images/", "").TrimStart('/')}",
+                    : BuildImageUrl(baseUrl, q.ImageUrl),
                 SoundUrl = string.IsNullOrEmpty(q.SoundUrl)
                     ? null
-                    : $"{baseUrl}/sounds/{q.SoundUrl.Replace("assets/sounds/", "").TrimStart('/')}",
+                    : BuildSoundUrl(baseUrl, q.SoundUrl),
                 Hint = q.Hint,
                 FunFact = q.FunFact,
                 Options = q.QuestionOptions.Select(qo => new OptionDto
@@ -111,5 +211,92 @@ public class QuizController : ControllerBase
             Console.WriteLine($"Error fetching questions for QuizId {quizId}: {ex.Message}");
             return StatusCode(500, $"An error occurred while fetching quiz questions: {ex.Message}");
         }
+    }
+
+    private async Task<int> ResolveQuizIdAsync(int fallbackQuizId, params string[] quizTitleCandidates)
+    {
+        if (quizTitleCandidates == null || quizTitleCandidates.Length == 0)
+        {
+            return fallbackQuizId;
+        }
+
+        var normalizedCandidates = quizTitleCandidates
+            .Where(c => !string.IsNullOrWhiteSpace(c))
+            .Select(c => c.Trim())
+            .ToList();
+
+        if (!normalizedCandidates.Any())
+        {
+            return fallbackQuizId;
+        }
+
+        // Prefer most recently inserted quiz when titles collide.
+        var quizzes = await _context.Quizzes
+            .AsNoTracking()
+            .OrderByDescending(q => q.QuizId)
+            .ToListAsync();
+
+        foreach (var candidate in normalizedCandidates)
+        {
+            var exactMatch = quizzes.FirstOrDefault(q =>
+                string.Equals(q.QuizTitle, candidate, StringComparison.OrdinalIgnoreCase)
+            );
+
+            if (exactMatch != null)
+            {
+                return exactMatch.QuizId;
+            }
+        }
+
+        foreach (var candidate in normalizedCandidates)
+        {
+            var containsMatch = quizzes.FirstOrDefault(q =>
+                q.QuizTitle.Contains(candidate, StringComparison.OrdinalIgnoreCase)
+            );
+
+            if (containsMatch != null)
+            {
+                return containsMatch.QuizId;
+            }
+        }
+
+        return fallbackQuizId;
+    }
+
+    private static string BuildImageUrl(string baseUrl, string rawImagePath)
+    {
+        var normalized = rawImagePath.Trim().Replace("\\", "/");
+
+        if (normalized.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            return normalized;
+        }
+
+        normalized = normalized
+            .Replace("assets/", "", StringComparison.OrdinalIgnoreCase)
+            .Replace("images/", "", StringComparison.OrdinalIgnoreCase)
+            .TrimStart('/');
+
+        return $"{baseUrl}/images/{normalized}";
+    }
+
+    private static string BuildSoundUrl(string baseUrl, string rawSoundPath)
+    {
+        var normalized = rawSoundPath.Trim().Replace("\\", "/");
+
+        if (normalized.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            return normalized;
+        }
+
+        normalized = normalized
+            .Replace("assets/sounds/", "", StringComparison.OrdinalIgnoreCase)
+            .Replace("/sounds/", "", StringComparison.OrdinalIgnoreCase)
+            .Replace("sounds/", "", StringComparison.OrdinalIgnoreCase)
+            .TrimStart('/');
+
+        return $"{baseUrl}/sounds/{normalized}";
     }
 }
