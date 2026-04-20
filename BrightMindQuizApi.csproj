@@ -5,8 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-  <None Include="wwwroot\images\**\*.*" CopyToOutputDirectory="PreserveNewest" />
-</ItemGroup>
+    <None Include="wwwroot\images\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="wwwroot\sounds\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
