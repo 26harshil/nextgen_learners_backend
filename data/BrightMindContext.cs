@@ -62,7 +62,7 @@ namespace BrightMindQuizApi.Data
             modelBuilder.Entity<Question>()
                 .Property(q => q.ImageUrl).HasColumnName("image_url");
             modelBuilder.Entity<Question>()
-                .Property(q => q.SoundUrl).HasColumnName("sound_data");
+                .Property(q => q.SoundUrl).HasColumnName("sound_data").HasColumnType("text");
             modelBuilder.Entity<Question>()
                 .Property(q => q.Hint).HasColumnName("hint");
             modelBuilder.Entity<Question>()
