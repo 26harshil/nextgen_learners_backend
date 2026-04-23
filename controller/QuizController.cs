@@ -84,7 +84,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 19,
+            fallbackQuizId: 23,
             quizTitleCandidates: ["Animal Sounds", "Sounds"]
         );
     }
