@@ -161,6 +161,15 @@ public class QuizController : ControllerBase
         );
     }
 
+    [HttpGet("babyanimals")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBabyAnimalsQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 19,
+            quizTitleCandidates: ["Baby Animals", "Baby Animal Trivia", "Baby Animal"]
+        );
+    }
+
     private async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizQuestions(
         int fallbackQuizId,
         params string[] quizTitleCandidates
