@@ -166,9 +166,10 @@ public class QuizController : ControllerBase
         params string[] quizTitleCandidates
     )
     {
+        int quizId = fallbackQuizId;
         try
         {
-            var quizId = await ResolveQuizIdAsync(fallbackQuizId, quizTitleCandidates);
+            quizId = await ResolveQuizIdAsync(fallbackQuizId, quizTitleCandidates);
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
 
             // Fetch raw data from DB first (no string manipulation in SQL)
