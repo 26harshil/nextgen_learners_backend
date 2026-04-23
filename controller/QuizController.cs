@@ -22,7 +22,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 2,
-            quizTitleCandidates: ["Learn Colors with Fun"]
+            quizTitleCandidates: ["Learn Colors with Fun", "Color Trivia"]
         );
     }
 
@@ -31,7 +31,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 3,
-            quizTitleCandidates: ["Fruit Fiesta"]
+            quizTitleCandidates: ["Fruit Fiesta", "Fruit Trivia"]
         );
     }
 
@@ -39,8 +39,8 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 8,
-            quizTitleCandidates: ["Math Mastery"]
+            fallbackQuizId: 1,
+            quizTitleCandidates: ["Math Mastery", "Math for Kids"]
         );
     }
 
@@ -49,7 +49,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 6,
-            quizTitleCandidates: ["Vegetable Adventure"]
+            quizTitleCandidates: ["Vegetable Adventure", "Vegetable Trivia"]
         );
     }
 
@@ -58,7 +58,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 7,
-            quizTitleCandidates: ["Vehicles World"]
+            quizTitleCandidates: ["Vehicles World", "Vehicle Trivia"]
         );
     }
 
@@ -66,8 +66,8 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 12,
-            quizTitleCandidates: ["Animal Name"]
+            fallbackQuizId: 4,
+            quizTitleCandidates: ["Animal Name", "Ground Animal Trivia"]
         );
     }
 
@@ -76,7 +76,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 5,
-            quizTitleCandidates: ["Bird"]
+            quizTitleCandidates: ["Bird", "Bird Trivia"]
         );
     }
 
@@ -84,7 +84,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 13,
+            fallbackQuizId: 19,
             quizTitleCandidates: ["Animal Sounds", "Sounds"]
         );
     }
@@ -93,7 +93,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalHomesQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 14,
+            fallbackQuizId: 18,
             quizTitleCandidates: ["Animal Homes & Babies", "Nature Explorer"]
         );
     }
@@ -102,7 +102,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMusicalInstrumentsQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 15,
+            fallbackQuizId: 17,
             quizTitleCandidates: ["Musical Instruments", "The Music Room"]
         );
     }
@@ -120,7 +120,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetOppositesQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 17,
+            fallbackQuizId: 15,
             quizTitleCandidates: ["Opposites", "Opposite Day"]
         );
     }
@@ -129,7 +129,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetWeatherQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 18,
+            fallbackQuizId: 14,
             quizTitleCandidates: ["Weather and Seasons", "Weather Watcher"]
         );
     }
@@ -138,7 +138,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetCommunityHelpersQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 19,
+            fallbackQuizId: 13,
             quizTitleCandidates: ["Community Helpers", "Who Helps Us?"]
         );
     }
@@ -147,7 +147,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBodyPartsQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 20,
+            fallbackQuizId: 12,
             quizTitleCandidates: ["Body Parts", "All About Me"]
         );
     }
@@ -156,7 +156,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBasicShapesQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 21,
+            fallbackQuizId: 11,
             quizTitleCandidates: ["Basic Shapes", "Shape Explorer"]
         );
     }
