@@ -303,8 +303,11 @@ public class QuizController : ControllerBase
 
         normalized = normalized
             .Replace("assets/sounds/", "", StringComparison.OrdinalIgnoreCase)
+            .Replace("assets/sound/", "", StringComparison.OrdinalIgnoreCase)
             .Replace("/sounds/", "", StringComparison.OrdinalIgnoreCase)
+            .Replace("/sound/", "", StringComparison.OrdinalIgnoreCase)
             .Replace("sounds/", "", StringComparison.OrdinalIgnoreCase)
+            .Replace("sound/", "", StringComparison.OrdinalIgnoreCase)
             .TrimStart('/');
 
         return $"{baseUrl}/sounds/{normalized}";
