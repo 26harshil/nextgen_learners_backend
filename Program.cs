@@ -37,12 +37,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger enabled for all environments (including Render production)
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // app.UseHttpsRedirection(); // Keep commented if no HTTPS binding in IIS
 app.UseCors("AllowAll");
