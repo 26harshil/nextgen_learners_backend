@@ -93,7 +93,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalHomesQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 18,
+            fallbackQuizId: 27,
             quizTitleCandidates: ["Animal Homes & Babies", "Nature Explorer"]
         );
     }
@@ -102,7 +102,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMusicalInstrumentsQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 17,
+            fallbackQuizId:28,
             quizTitleCandidates: ["Musical Instruments", "The Music Room"]
         );
     }
@@ -133,12 +133,20 @@ public class QuizController : ControllerBase
             quizTitleCandidates: ["Weather and Seasons", "Weather Watcher"]
         );
     }
+    [HttpGet("ocenlife")]
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetOceanLifeQuiz()
+    {
+        return await GetQuizQuestions(
+            fallbackQuizId: 26,
+            quizTitleCandidates: ["Ocean Life and Animals", "Ocean Life"]
+        );
+    }
 
     [HttpGet("communityhelpers")]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetCommunityHelpersQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: 13,
+            fallbackQuizId: 29,
             quizTitleCandidates: ["Community Helpers", "Who Helps Us?"]
         );
     }
