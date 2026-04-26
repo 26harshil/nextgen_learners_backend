@@ -67,7 +67,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 4,
-            quizTitleCandidates: ["Animal Name", "Ground Animal Trivia"]
+            quizTitleCandidates: ["Ground Animal Trivia", "Animal Name"]
         );
     }
 
