@@ -12,47 +12,80 @@ public class QuizController : ControllerBase
 {
     private readonly BrightMindContext _context;
 
+    /// <summary>Maps the URL name to its database category_id.</summary>
+    private static readonly Dictionary<string, int> _nameToCategoryId = new(StringComparer.OrdinalIgnoreCase)
+    {
+        { "math",                1  },
+        { "colors",              2  },
+        { "fruits",              3  },
+        { "animalname",          4  },
+        { "birds",               5  },
+        { "vegetables",          6  },
+        { "vehicles",            7  },
+        { "basicshapes",         11 },
+        { "bodyparts",           12 },
+        { "weather",             14 },
+        { "opposites",           15 },
+        { "emotions",            16 },
+        { "babyanimals",         19 },
+        { "ocenlife",            26 },
+        { "animalhomes",         27 },
+        { "musicalinstruments",  28 },
+        { "communityhelpers",    29 },
+    };
+
     public QuizController(BrightMindContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    /// <summary>Get quiz questions by Category ID</summary>
+    /// <summary>Get quiz questions by quiz name</summary>
     /// <remarks>
-    /// Returns all questions and options for the quiz matching the given category ID.
+    /// Returns all questions and options for the named quiz category.
+    /// Each name maps to a category ID in the database.
     ///
-    /// **Category ID Reference:**
+    /// **Available names and their category IDs:**
     ///
-    /// | ID | Category |
-    /// |---|---|
-    /// | 1 | Math for Kids |
-    /// | 2 | Color Trivia |
-    /// | 3 | Fruit Trivia |
-    /// | 4 | Ground Animal Trivia |
-    /// | 5 | Bird Trivia |
-    /// | 6 | Vegetable Trivia |
-    /// | 7 | Vehicle Trivia |
-    /// | 11 | Basic Shapes |
-    /// | 12 | Body Parts |
-    /// | 14 | Weather and Seasons |
-    /// | 15 | Opposites |
-    /// | 16 | Emotions &amp; Feelings |
-    /// | 19 | Baby Animals |
-    /// | 26 | Ocean Life |
-    /// | 27 | Animal Homes &amp; Babies |
-    /// | 28 | Musical Instruments |
-    /// | 29 | Community Helpers |
+    /// | URL Name | Category | DB Category ID |
+    /// |---|---|---|
+    /// | `math` | Math for Kids | 1 |
+    /// | `colors` | Color Trivia | 2 |
+    /// | `fruits` | Fruit Trivia | 3 |
+    /// | `animalname` | Ground Animal Trivia | 4 |
+    /// | `birds` | Bird Trivia | 5 |
+    /// | `vegetables` | Vegetable Trivia | 6 |
+    /// | `vehicles` | Vehicle Trivia | 7 |
+    /// | `basicshapes` | Basic Shapes | 11 |
+    /// | `bodyparts` | Body Parts | 12 |
+    /// | `weather` | Weather and Seasons | 14 |
+    /// | `opposites` | Opposites | 15 |
+    /// | `emotions` | Emotions &amp; Feelings | 16 |
+    /// | `babyanimals` | Baby Animals | 19 |
+    /// | `ocenlife` | Ocean Life | 26 |
+    /// | `animalhomes` | Animal Homes &amp; Babies | 27 |
+    /// | `musicalinstruments` | Musical Instruments | 28 |
+    /// | `communityhelpers` | Community Helpers | 29 |
+    ///
+    /// **Example:** `GET /Quizz/math` returns all Math for Kids questions.
     /// </remarks>
-    /// <param name="categoryId">The numeric category ID (e.g. 1 for Math, 4 for Ground Animals)</param>
+    /// <param name="quizName">The quiz name (e.g. math, colors, animalname, ocenlife)</param>
     /// <response code="200">List of quiz questions with multiple choice options</response>
-    /// <response code="404">No quiz or questions found for this category ID</response>
+    /// <response code="400">Unknown quiz name — not in the supported list</response>
+    /// <response code="404">No quiz or questions found for this category</response>
     /// <response code="500">Server error while fetching quiz data</response>
-    [HttpGet("{categoryId:int}")]
+    [HttpGet("{quizName}")]
     [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(400)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuizByCategory(int categoryId)
+    public async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuiz(string quizName)
     {
+        if (!_nameToCategoryId.TryGetValue(quizName, out var categoryId))
+        {
+            var validNames = string.Join(", ", _nameToCategoryId.Keys.OrderBy(k => k));
+            return BadRequest($"Unknown quiz name \"{quizName}\". Valid names: {validNames}");
+        }
+
         try
         {
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
@@ -66,7 +99,7 @@ public class QuizController : ControllerBase
 
             if (quiz == null)
             {
-                return NotFound($"No quiz found for category ID {categoryId}.");
+                return NotFound($"No quiz found for \"{quizName}\" (category ID: {categoryId}).");
             }
 
             // Fetch all questions for this quiz
@@ -78,7 +111,7 @@ public class QuizController : ControllerBase
 
             if (!rawQuestions.Any())
             {
-                return NotFound($"No questions found for category ID {categoryId} (quiz: \"{quiz.QuizTitle}\", quiz_id: {quiz.QuizId}).");
+                return NotFound($"No questions found for \"{quizName}\" (quiz: \"{quiz.QuizTitle}\", quiz_id: {quiz.QuizId}).");
             }
 
             var questions = rawQuestions.Select(q => new QuestionDto
@@ -105,7 +138,7 @@ public class QuizController : ControllerBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error fetching questions for category ID {categoryId}: {ex.Message}");
+            Console.WriteLine($"Error fetching quiz \"{quizName}\" (category {categoryId}): {ex.Message}");
             return StatusCode(500, $"An error occurred: {ex.Message}");
         }
     }
