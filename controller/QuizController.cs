@@ -17,7 +17,13 @@ public class QuizController : ControllerBase
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
+    /// <summary>Get Color Trivia questions (Category ID: 2)</summary>
+    /// <remarks>Returns all questions and options for the Color Trivia quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("colors")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetColorsQuiz()
     {
         return await GetQuizQuestions(
@@ -26,7 +32,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Fruit Trivia questions (Category ID: 3)</summary>
+    /// <remarks>Returns all questions and options for the Fruit Trivia quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("fruits")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetFruitsQuiz()
     {
         return await GetQuizQuestions(
@@ -35,7 +47,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Math for Kids questions (Category ID: 1)</summary>
+    /// <remarks>Returns all questions and options for the Math for Kids quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("math")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
     {
         return await GetQuizQuestions(
@@ -44,7 +62,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Vegetable Trivia questions (Category ID: 6)</summary>
+    /// <remarks>Returns all questions and options for the Vegetable Trivia quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("vegetables")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVegetablesQuiz()
     {
         return await GetQuizQuestions(
@@ -53,7 +77,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Vehicle Trivia questions (Category ID: 7)</summary>
+    /// <remarks>Returns all questions and options for the Vehicle Trivia quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("vehicles")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetVehiclesQuiz()
     {
         return await GetQuizQuestions(
@@ -62,7 +92,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Ground Animal Trivia questions (Category ID: 4)</summary>
+    /// <remarks>Returns all questions and options for the Ground Animal Trivia quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("animalname")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalQuiz()
     {
         return await GetQuizQuestions(
@@ -71,7 +107,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Bird Trivia questions (Category ID: 5)</summary>
+    /// <remarks>Returns all questions and options for the Bird Trivia quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("birds")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBirdQuiz()
     {
         return await GetQuizQuestions(
@@ -80,7 +122,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Animal Sounds questions (Category ID: 25)</summary>
+    /// <remarks>Returns all questions and options for the Animal Sounds quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("sounds")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetSoundQuiz()
     {
         return await GetQuizQuestions(
@@ -89,7 +137,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Animal Homes &amp; Babies questions (Category ID: 27)</summary>
+    /// <remarks>Returns all questions and options for the Animal Homes &amp; Babies quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("animalhomes")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAnimalHomesQuiz()
     {
         return await GetQuizQuestions(
@@ -98,16 +152,28 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Musical Instruments questions (Category ID: 28)</summary>
+    /// <remarks>Returns all questions and options for the Musical Instruments quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("musicalinstruments")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMusicalInstrumentsQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId:28,
+            fallbackQuizId: 28,
             quizTitleCandidates: ["Musical Instruments", "The Music Room"]
         );
     }
 
+    /// <summary>Get Emotions &amp; Feelings questions (Category ID: 16)</summary>
+    /// <remarks>Returns all questions and options for the Emotions &amp; Feelings quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("emotions")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetEmotionsQuiz()
     {
         return await GetQuizQuestions(
@@ -116,7 +182,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Opposites questions (Category ID: 15)</summary>
+    /// <remarks>Returns all questions and options for the Opposites quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("opposites")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetOppositesQuiz()
     {
         return await GetQuizQuestions(
@@ -125,7 +197,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Weather and Seasons questions (Category ID: 14)</summary>
+    /// <remarks>Returns all questions and options for the Weather and Seasons quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("weather")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetWeatherQuiz()
     {
         return await GetQuizQuestions(
@@ -133,7 +211,14 @@ public class QuizController : ControllerBase
             quizTitleCandidates: ["Weather and Seasons", "Weather Watcher"]
         );
     }
+
+    /// <summary>Get Ocean Life questions (Category ID: 26)</summary>
+    /// <remarks>Returns all questions and options for the Ocean Life quiz (Wonders of the Ocean).</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("ocenlife")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetOceanLifeQuiz()
     {
         return await GetQuizQuestions(
@@ -142,7 +227,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Community Helpers questions (Category ID: 29)</summary>
+    /// <remarks>Returns all questions and options for the Community Helpers quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("communityhelpers")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetCommunityHelpersQuiz()
     {
         return await GetQuizQuestions(
@@ -151,7 +242,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Body Parts questions (Category ID: 12)</summary>
+    /// <remarks>Returns all questions and options for the Body Parts quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("bodyparts")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBodyPartsQuiz()
     {
         return await GetQuizQuestions(
@@ -160,7 +257,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Basic Shapes questions (Category ID: 11)</summary>
+    /// <remarks>Returns all questions and options for the Basic Shapes quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("basicshapes")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBasicShapesQuiz()
     {
         return await GetQuizQuestions(
@@ -169,7 +272,13 @@ public class QuizController : ControllerBase
         );
     }
 
+    /// <summary>Get Baby Animals questions (Category ID: 19)</summary>
+    /// <remarks>Returns all questions and options for the Baby Animals quiz.</remarks>
+    /// <response code="200">List of quiz questions with options</response>
+    /// <response code="404">No questions found for this quiz</response>
     [HttpGet("babyanimals")]
+    [ProducesResponseType(typeof(IEnumerable<QuestionDto>), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetBabyAnimalsQuiz()
     {
         return await GetQuizQuestions(
