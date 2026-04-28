@@ -39,7 +39,7 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<IEnumerable<QuestionDto>>> GetMathQuiz()
     {
         return await GetQuizQuestions(
-            fallbackQuizId: ,8
+            fallbackQuizId: 1,
             quizTitleCandidates: ["Math Mastery", "Math for Kids"]
         );
     }
