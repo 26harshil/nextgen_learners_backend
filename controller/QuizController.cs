@@ -27,9 +27,8 @@ public class QuizController : ControllerBase
         { "weather",             14 },
         { "opposites",           15 },
         { "emotions",            16 },
-        { "babyanimals",         19 },
+        { "babyanimals",         27 },
         { "ocenlife",            26 },
-        { "animalhomes",         27 },
         { "musicalinstruments",  28 },
         { "communityhelpers",    29 },
     };
@@ -60,9 +59,8 @@ public class QuizController : ControllerBase
     /// | `weather` | Weather and Seasons | 14 |
     /// | `opposites` | Opposites | 15 |
     /// | `emotions` | Emotions &amp; Feelings | 16 |
-    /// | `babyanimals` | Baby Animals | 19 |
+    /// | `babyanimals` | Baby Animals &amp; Homes | 27 |
     /// | `ocenlife` | Ocean Life | 26 |
-    /// | `animalhomes` | Animal Homes &amp; Babies | 27 |
     /// | `musicalinstruments` | Musical Instruments | 28 |
     /// | `communityhelpers` | Community Helpers | 29 |
     ///
