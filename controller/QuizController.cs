@@ -138,7 +138,7 @@ public class QuizController : ControllerBase
     {
         return await GetQuizQuestions(
             fallbackQuizId: 26,
-            quizTitleCandidates: ["Ocean Life and Animals", "Ocean Life"]
+            quizTitleCandidates: ["Wonders of the Ocean", "Ocean Life and Animals", "Ocean Life"]
         );
     }
 
@@ -291,8 +291,13 @@ public class QuizController : ControllerBase
             return normalized;
         }
 
+        // Flutter local asset path — return as-is so the app loads it from the bundle
+        if (normalized.StartsWith("assets/", StringComparison.OrdinalIgnoreCase))
+        {
+            return normalized;
+        }
+
         normalized = normalized
-            .Replace("assets/", "", StringComparison.OrdinalIgnoreCase)
             .Replace("images/", "", StringComparison.OrdinalIgnoreCase)
             .TrimStart('/');
 
